@@ -1,5 +1,5 @@
 <template>
-  <h1>앱 제목 변경</h1>
+  <h1>내이름은 김도영</h1>
 </template>
 
 <script>
