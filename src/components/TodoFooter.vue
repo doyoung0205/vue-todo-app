@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="clearAllContainer">
     <!-- <button @click="removeAllTodoItem">모두 삭제</button>  TEST 코드 짤 때 더 유용-->
-    <button @click="$emit('removeAllTodoItem')">모두 삭제</button>
+    <button @click="removeAllTodoItem" class="clearAllBtn">
+      모두 삭제
+    </button>
   </div>
 </template>
 
@@ -11,11 +13,24 @@ export default {
     return {};
   },
   methods: {
-    // removeAllTodoItem() {
-    //   this.$emit('removeAllTodoItem');
-    // },
+    removeAllTodoItem() {
+      this.$store.commit('removeAllTodoItem');
+    },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.clearAllContainer {
+  width: 8.5rem;
+  height: 50px;
+  line-height: 50px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.clearAllBtn {
+  color: #e20303;
+  display: block;
+}
+</style>
