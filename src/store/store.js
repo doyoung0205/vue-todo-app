@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
+import * as getters from './getters';
+import * as mutations from './mutations';
 // 공식 플러그인 을 사용 - 전역으로 추가할 때
 Vue.use(Vuex);
 
@@ -30,36 +31,6 @@ export const store = new Vuex.Store({
     todoItems: storage.fetch(),
     prefix: storage.prefix,
   },
-  mutations: {
-    addItem(state, value) {
-      if (!value) {
-        return false;
-      }
-      const item = {
-        completed: false,
-        item: value,
-      };
-      localStorage.setItem(this.state.prefix + value, JSON.stringify(item));
-      this.state.todoItems.push(item);
-    },
-    removeAllTodoItem(state) {
-      this.state.todoItems = [];
-      localStorage.clear();
-    },
-    removeItem(state, payload) {
-      const { todoItem, index } = payload;
-      this.state.todoItems.splice(index, index + 1);
-      localStorage.removeItem(this.state.prefix + todoItem.item);
-    },
-    toggleComplete(state, todoItem, index) {
-      console.log('todoItem', todoItem);
-      console.log('index', index);
-      todoItem.completed = !todoItem.completed;
-
-      const item = todoItem.item;
-      // 로컬 스토리지의 데이터를 갱신
-      localStorage.removeItem(this.state.prefix + item);
-      localStorage.setItem(this.state.prefix + item, JSON.stringify(todoItem));
-    },
-  },
+  getters,
+  mutations,
 });

@@ -8,14 +8,13 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
   data() {
     return {};
   },
   methods: {
-    removeAllTodoItem() {
-      this.$store.commit('removeAllTodoItem');
-    },
+    ...mapMutations(['removeAllTodoItem']),
   },
 };
 </script>

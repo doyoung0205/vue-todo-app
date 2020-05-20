@@ -2,7 +2,7 @@
   <div>
     <transition-group name="list" tag="ul">
       <li
-        v-for="(todoItem, index) in this.$store.state.todoItems"
+        v-for="(todoItem, index) in todoItems"
         :key="'todoId_' + index"
         class="shadow "
       >
@@ -11,10 +11,10 @@
           <span v-bind:class="{ textCompleted: todoItem.completed }">
             {{ todoItem.item }}</span
           >
-          <button class="checkBtn" @click="toggleComplete(todoItem, index)">
+          <button class="checkBtn" @click="toggleComplete({ todoItem, index })">
             check
           </button>
-          <button class="removeBtn" @click="removeItem(todoItem, index)">
+          <button class="removeBtn" @click="removeItem({ todoItem, index })">
             remove
           </button>
         </div>
@@ -24,18 +24,30 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   methods: {
-    removeItem(todoItem, index) {
-      const obj = {
-        todoItem,
-        index,
-      };
-      this.$store.commit('removeItem', obj);
-    },
-    toggleComplete(todoItem, index) {
-      this.$store.commit('toggleComplete', todoItem, index);
-    },
+    ...mapMutations(['removeItem', 'toggleComplete']), // 암묵적으로 { todoItem, index } 를 넘김
+    // removeItem(todoItem, index) {
+    //   this.$store.commit('removeItem', { todoItem, index });
+    // },
+    // toggleComplete(todoItem, index) {
+    //   this.$store.commit('toggleComplete', {
+    //     todoItem,
+    //     index,
+    //   });
+    // },
+  },
+  computed: {
+    // todoItems() {
+    //   return this.$store.getters.storedTodoItems;
+    // },
+    // ...mapGetters(['storedTodoItems']), // 이름이 같을 때
+    // 이름이 다를 때
+    ...mapGetters({
+      todoItems: 'storedTodoItems',
+    }),
   },
 };
 </script>
